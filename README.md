@@ -1,11 +1,29 @@
 <h1 align="center">⚔️ 三省六部 · Windows</h1>
 <h1 align="center">原项目地址：https://github.com/cft0808/edict</h1>
 <h1 align="center">如有侵权将立即删除！</h1>
- 
-## 项目简介
-因原仓库仅支持MacOS/Linux系统，故在原仓库基础上改造Windows版，解决了所有Window兼容性问题。本仓库除这段话之外其他所有内容均由小米大模型MiMo-V2-Pro完成，截止3月24日累计消耗Token超142M。
-<img width="852" height="340" alt="Snipaste_2026-03-24_15-22-32" src="https://github.com/user-attachments/assets/aeeddfb7-2c36-429b-ab6d-b308e4ed4727" />
 
+ <p align="center">
+  <img src="https://img.shields.io/badge/OpenClaw-Required-blue?style=flat-square" alt="OpenClaw">
+  <img src="https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Agents-12_Specialized-8B5CF6?style=flat-square" alt="Agents">
+  <img src="https://img.shields.io/badge/Dashboard-Real--time-F59E0B?style=flat-square" alt="Dashboard">
+  <img src="https://img.shields.io/badge/License-MIT-22C55E?style=flat-square" alt="License">
+  <img src="https://img.shields.io/badge/Frontend-React_18-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React">
+  <img src="https://img.shields.io/badge/Backend-stdlib_only-EC4899?style=flat-square" alt="Zero Backend Dependencies">
+</p>
+
+
+<p align="center">
+    请认准原作者公众号：<img src="https://img.shields.io/badge/公众号-cft0808-07C160?style=for-the-badge&logo=wechat&logoColor=white" alt="WeChat">
+</p>
+
+---
+## 项目简介
+因原仓库仅支持MacOS/Linux系统，故在原仓库基础上改造Windows版，解决了所有Window兼容性问题。本仓库除这段话之外其他所有内容均由小米大模型MiMo-V2-Pro完成，截止3月24日累计消耗Token超142M（小米这个模型作为基座确实挺强）
+
+<div align="center">
+<img width="852" height="340" alt="Snipaste_2026-03-24_15-22-32" src="https://github.com/user-attachments/assets/aeeddfb7-2c36-429b-ab6d-b308e4ed4727" />
+</div>
 
 ## 📁 项目结构
 
@@ -44,18 +62,18 @@ edict/
 
 ---
 
-## 🚀 安装
+# 🚀 安装
 
 
 
-# 打开浏览器
+## 打开浏览器
 start http://127.0.0.1:7891
 
 
 
-## 🪟 Windows 兼容性适配
+# ✅Windows 兼容性适配
 
-本项目原生开发于 macOS/Linux，以下记录了完整移植到 **Windows (PowerShell)** 所做的全部修改。
+本项目原生开发于 macOS/Linux，以下记录了完整移植到 **Windows (PowerShell)** 所做的全部修改。此外，还修复了**时间显示错乱、中文乱码、服务器无法自启动、官员状态无法同步、奏折无法正确流转、官员总览界面数据异常**等问题。
 
 ### 问题 1：`subprocess.run(["openclaw", ...])` 找不到文件
 
