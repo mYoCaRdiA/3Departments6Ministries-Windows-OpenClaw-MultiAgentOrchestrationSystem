@@ -1,112 +1,10 @@
-<h1 align="center">⚔️ 三省六部 · Edict</h1>
+<h1 align="center">⚔️ 三省六部 · Windows</h1>
+<h1 align="center">原项目地址：https://github.com/cft0808/edict</h1>
+<h1 align="center">本仓库是在原仓库基础上改造的Windows版，如有侵权将立即删除！</h1>
+ 
+## 项目简介
+因原仓库仅支持MacOS/Linux系统，故在原仓库基础上改造Windows版，解决了所有Window兼容性问题。本仓库除这段话之外其他所有内容均由小米大模型MiMo-V2-Pro完成，截止3月24日累计消耗Token超142M。
 
-<p align="center">
-  <strong>我用 1300 年前的帝国制度，重新设计了 AI 多 Agent 协作架构。<br>结果发现，古人比现代 AI 框架更懂分权制衡。</strong>
-</p>
-
-<p align="center">
-  <sub>12 个 AI Agent（11 个业务角色 + 1 个兼容角色）组成三省六部：太子分拣、中书省规划、门下省审核封驳、尚书省派发、六部+吏部并行执行。<br>比 CrewAI 多一层<b>制度性审核</b>，比 AutoGen 多一个<b>实时看板</b>。</sub>
-</p>
-
-<p align="center">
-  <a href="#-demo">🎬 看 Demo</a> ·
-  <a href="#-30-秒快速体验">🚀 30 秒体验</a> ·
-  <a href="#-架构">🏛️ 架构</a> ·
-  <a href="#-功能全景">📋 看板功能</a> ·
-  <a href="docs/task-dispatch-architecture.md">📚 架构文档</a> ·
-  <a href="README_EN.md">English</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/OpenClaw-Required-blue?style=flat-square" alt="OpenClaw">
-  <img src="https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Windows-PowerShell-0078D4?style=flat-square&logo=windows&logoColor=white" alt="Windows">
-  <img src="https://img.shields.io/badge/Agents-12_Specialized-8B5CF6?style=flat-square" alt="Agents">
-  <img src="https://img.shields.io/badge/Dashboard-Real--time-F59E0B?style=flat-square" alt="Dashboard">
-  <img src="https://img.shields.io/badge/License-MIT-22C55E?style=flat-square" alt="License">
-</p>
-
----
-
-## 🤔 为什么是三省六部？
-
-大多数 Multi-Agent 框架的套路是：
-
-> *"来，你们几个 AI 自己聊，聊完把结果给我。"*
-
-然后你拿到一坨不知道经过了什么处理的结果，无法复现，无法审计，无法干预。
-
-**三省六部的思路完全不同** —— 我们用了一个在中国存在 1400 年的制度架构：
-
-```
-你 (皇上) → 太子 (分拣) → 中书省 (规划) → 门下省 (审议) → 尚书省 (派发) → 六部 (执行) → 回奏
-```
-
-这不是花哨的 metaphor，这是**真正的分权制衡**：
-
-| | CrewAI | MetaGPT | AutoGen | **三省六部** |
-|---|:---:|:---:|:---:|:---:|
-| **审核机制** | ❌ 无 | ⚠️ 可选 | ⚠️ Human-in-loop | **✅ 门下省专职审核 · 可封驳** |
-| **实时看板** | ❌ | ❌ | ❌ | **✅ 军机处 Kanban + 时间线** |
-| **任务干预** | ❌ | ❌ | ❌ | **✅ 叫停 / 取消 / 恢复** |
-| **流转审计** | ⚠️ | ⚠️ | ❌ | **✅ 完整奏折存档** |
-| **Agent 健康监控** | ❌ | ❌ | ❌ | **✅ 心跳 + 活跃度检测** |
-| **热切换模型** | ❌ | ❌ | ❌ | **✅ 看板内一键切换 LLM** |
-| **部署难度** | 中 | 高 | 中 | **低 · 一键安装 / Docker** |
-
-> **核心差异：制度性审核 + 完全可观测 + 实时可干预**
-
----
-
-## 🏛️ 架构
-
-```
-                           ┌───────────────────────────────────┐
-                           │          👑 皇上（你）              │
-                           │     Feishu · Telegram · Signal     │
-                           └─────────────────┬─────────────────┘
-                                             │ 下旨
-                           ┌─────────────────▼─────────────────┐
-                           │          🤴 太子 (taizi)            │
-                           │    分拣：闲聊直接回 / 旨意建任务      │
-                           └─────────────────┬─────────────────┘
-                                             │ 传旨
-                           ┌─────────────────▼─────────────────┐
-                           │          📜 中书省 (zhongshu)       │
-                           │       接旨 → 规划 → 拆解子任务       │
-                           └─────────────────┬─────────────────┘
-                                             │ 提交审核
-                           ┌─────────────────▼─────────────────┐
-                           │          🔍 门下省 (menxia)         │
-                           │       审议方案 → 准奏 / 封驳 🚫      │
-                           └─────────────────┬─────────────────┘
-                                             │ 准奏 ✅
-                           ┌─────────────────▼─────────────────┐
-                           │          📮 尚书省 (shangshu)       │
-                           │     派发任务 → 协调六部 → 汇总回奏    │
-                           └───┬──────┬──────┬──────┬──────┬───┘
-                               │      │      │      │      │
-                         ┌─────▼┐ ┌───▼───┐ ┌▼─────┐ ┌───▼─┐ ┌▼─────┐
-                         │💰 户部│ │📝 礼部│ │⚔️ 兵部│ │⚖️ 刑部│ │🔧 工部│
-                         │ 数据  │ │ 文档  │ │ 工程  │ │ 合规  │ │ 基建  │
-                         └──────┘ └──────┘ └──────┘ └─────┘ └──────┘
-                                                               ┌──────┐
-                                                               │📋 吏部│
-                                                               │ 人事  │
-                                                               └──────┘
-```
-
-### 任务状态流转
-
-```
-皇上 → 太子分拣 → 中书规划 → 门下审议 → 已派发 → 执行中 → 待审查 → ✅ 已完成
-                      ↑          │                              │
-                      └──── 封驳 ─┘                    阻塞 Blocked
-```
-
-> ⚡ `kanban_update.py` 内置 `_VALID_TRANSITIONS` 状态机校验，非法跳转被拒绝。
-
----
 
 ## 📁 项目结构
 
@@ -147,48 +45,12 @@ edict/
 
 ## 🚀 安装
 
-### 前置条件
 
-- [OpenClaw](https://openclaw.ai) 已安装并配置
-- Python 3.9+
-- Windows 10+（PowerShell）/ macOS / Linux
-
-### Windows 安装
-
-```powershell
-git clone https://github.com/cft0808/edict.git
-cd edict
-.\setup.ps1
-```
-
-`setup.ps1` 自动完成：
-- ✅ 检查 Python 依赖
-- ✅ 创建全量 Agent Workspace
-- ✅ 注册 Agent 及权限矩阵到 `openclaw.json`
-- ✅ 复制看板脚本和技能文档到各 Agent
-- ✅ 同步 Agent 配置
-
-### macOS / Linux 安装
-
-```bash
-git clone https://github.com/cft0808/edict.git
-cd edict
-chmod +x install.sh && ./install.sh
-```
-
-### 启动
-
-```powershell
-# 终端 1：数据刷新循环
-python dashboard/server.py
 
 # 打开浏览器
 start http://127.0.0.1:7891
 ```
 
-> 💡 `server.py` 内嵌前端，启动即可用。
-
----
 
 ## 🪟 Windows 兼容性适配
 

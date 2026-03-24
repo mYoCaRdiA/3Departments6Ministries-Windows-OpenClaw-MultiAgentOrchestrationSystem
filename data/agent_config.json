@@ -88,11 +88,11 @@
       "emoji": "🤴",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-taizi",
+      "workspace": "~/.openclaw/workspace-taizi",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-taizi\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-taizi\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -109,11 +109,11 @@
       "emoji": "📜",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-zhongshu",
+      "workspace": "~/.openclaw/workspace-zhongshu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-zhongshu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-zhongshu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -131,11 +131,11 @@
       "emoji": "🔍",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-menxia",
+      "workspace": "~/.openclaw/workspace-menxia",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-menxia\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-menxia\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -153,11 +153,11 @@
       "emoji": "📮",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-shangshu",
+      "workspace": "~/.openclaw/workspace-shangshu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-shangshu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-shangshu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -181,11 +181,11 @@
       "emoji": "💰",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-hubu",
+      "workspace": "~/.openclaw/workspace-hubu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-hubu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-hubu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -202,11 +202,11 @@
       "emoji": "📝",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-libu",
+      "workspace": "~/.openclaw/workspace-libu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-libu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-libu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -223,11 +223,11 @@
       "emoji": "⚔️",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-bingbu",
+      "workspace": "~/.openclaw/workspace-bingbu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-bingbu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-bingbu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -244,11 +244,11 @@
       "emoji": "⚖️",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-xingbu",
+      "workspace": "~/.openclaw/workspace-xingbu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-xingbu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-xingbu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -265,11 +265,11 @@
       "emoji": "🔧",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-gongbu",
+      "workspace": "~/.openclaw/workspace-gongbu",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-gongbu\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-gongbu\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -286,11 +286,11 @@
       "emoji": "👔",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-libu_hr",
+      "workspace": "~/.openclaw/workspace-libu_hr",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-libu_hr\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-libu_hr\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -307,11 +307,11 @@
       "emoji": "📰",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-zaochao",
+      "workspace": "~/.openclaw/workspace-zaochao",
       "skills": [
         {
           "name": "kanban_update",
-          "path": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-zaochao\\skills\\kanban_update\\SKILL.md",
+          "path": "~/.openclaw/workspace-zaochao\\skills\\kanban_update\\SKILL.md",
           "exists": true,
           "description": "name: kanban_update"
         }
@@ -326,7 +326,7 @@
       "emoji": "🤴",
       "model": "openrouter/xiaomi/mimo-v2-pro",
       "defaultModel": "openrouter/xiaomi/mimo-v2-pro",
-      "workspace": "C:\\Users\\Administrator.DESKTOP-K42L3AG\\.openclaw\\workspace-main",
+      "workspace": "~/.openclaw/workspace-main",
       "skills": [],
       "allowAgents": [
         "zhongshu",
