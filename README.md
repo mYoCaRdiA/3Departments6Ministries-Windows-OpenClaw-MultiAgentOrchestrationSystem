@@ -19,7 +19,7 @@
 
 ---
 ## 项目简介
-因原仓库仅支持MacOS/Linux系统，故在原仓库基础上改造Windows版，解决了所有Window兼容性问题。本仓库除这段话之外其他所有内容均由小米大模型MiMo-V2-Pro完成，截止3月24日累计消耗Token超142M（小米这个模型作为基座确实挺强）
+因原仓库仅支持MacOS/Linux系统，故在原仓库基础上改造Windows版，解决了所有Window兼容性问题。本仓库除这段话之外其他所有内容均由小米大模型MiMo-V2-Pro完成，截止3月24日累计消耗Token超142M（小米这个模型作为基座确实挺强）。此外，在修bug期间通过自学习skill学习到的规则保存在/.learnings文件夹下，可以复制粘贴到\.openclaw\workspace文件夹(工作区)下，以提高大模型对此仓库的理解能力。
 
 <div align="center">
 <img width="852" height="340" alt="Snipaste_2026-03-24_15-22-32" src="https://github.com/user-attachments/assets/aeeddfb7-2c36-429b-ab6d-b308e4ed4727" />
