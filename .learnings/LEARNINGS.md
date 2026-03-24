@@ -1,134 +1,197 @@
-# LEARNINGS.md — 经验教训
+# Learnings Log
 
-## [LRN-20260323-001] best_practice
+## [LRN-20260324-001] best_practice
 
-**Logged**: 2026-03-23T18:00:00+08:00
+**Logged**: 2026-03-24T10:00:00+08:00
 **Priority**: high
-**Status**: pending
-**Area**: config
+**Status**: promoted
+**Area**: infra
 
 ### Summary
-在 Windows 上部署 Python 项目时，必须全面检查文件编码兼容性
+Windows Python subprocess must use `shell=True` to resolve `.cmd`/`.bat` extensions
 
 ### Details
-edict 项目在 Linux 上开发，迁移到 Windows 时遇到一连串编码问题：
-1. `open()` / `write_text()` 未指定 `encoding='utf-8'`
-2. `json.dump()` 通过 `os.fdopen()` 写入时未指定编码
-3. `read_text()` 同样未指定编码
-4. PowerShell 终端默认 GBK 导致显示乱码（与实际文件编码无关）
-
-这些问题在 Linux 上不会出现（默认 UTF-8），但在 Windows 中文版上全部暴露。
+On Windows, executables installed by npm are `.cmd` files (e.g., `openclaw.cmd`). `subprocess.run(["openclaw", ...])` without `shell=True` cannot find the file. Always detect platform and set `shell=IS_WINDOWS`.
 
 ### Suggested Action
-安装任何 Python 项目到 Windows 时，第一步就检查并修复所有文件操作的编码参数。
+Promoted to TOOLS.md as a Windows Python rule.
 
 ### Metadata
-- Source: error
-- Related Files: scripts/file_lock.py, scripts/utils.py, dashboard/server.py
-- Tags: windows, encoding, python, deployment
+- Source: conversation
+- Related Files: dashboard/server.py
+- Tags: windows, python, subprocess
+- Pattern-Key: windows.subprocess.cmd_resolution
+- First-Seen: 2026-03-24
 
 ---
 
-## [LRN-20260323-002] best_practice
+## [LRN-20260324-002] best_practice
 
-**Logged**: 2026-03-23T18:00:00+08:00
+**Logged**: 2026-03-24T14:00:00+08:00
 **Priority**: high
+**Status**: promoted
+**Area**: infra
+
+### Summary
+Shared scripts should use absolute/fixed paths, not `__file__`-relative paths when copied across workspaces
+
+### Details
+When a script using `_BASE = Path(__file__).parent.parent` is copied to multiple locations, each copy resolves `_BASE` differently. If the script must always access the same data directory, use a fixed path (e.g., `pathlib.Path.home() / '.openclaw' / 'workspace' / 'skills' / 'edict-main' / 'data'`) instead of relative paths.
+
+### Suggested Action
+Promoted to TOOLS.md as a path resolution rule.
+
+### Metadata
+- Source: conversation
+- Related Files: scripts/kanban_update.py
+- Tags: path, workspace, sync, copy
+- Pattern-Key: shared_scripts.absolute_paths
+- First-Seen: 2026-03-24
+
+---
+
+## [LRN-20260324-003] best_practice
+
+**Logged**: 2026-03-24T14:30:00+08:00
+**Priority**: high
+**Status**: promoted
+**Area**: infra
+
+### Summary
+State changes + scheduler timestamps must be updated atomically to prevent rollback
+
+### Details
+When a system has both "agent makes state changes" and "scheduler auto-rolls back stale states", the state change must atomically update `lastProgressAt` to prevent the scheduler from reverting it. Race conditions occur when state is updated in one transaction and scheduler timestamp in another.
+
+### Suggested Action
+Promoted to TOOLS.md as an edict architecture rule.
+
+### Metadata
+- Source: conversation
+- Related Files: scripts/kanban_update.py, dashboard/server.py
+- Tags: scheduler, state, atomic, race-condition
+- Pattern-Key: state_change.atomic_scheduler_update
+- First-Seen: 2026-03-24
+
+---
+
+## [LRN-20260324-004] best_practice
+
+**Logged**: 2026-03-24T13:00:00+08:00
+**Priority**: medium
+**Status**: promoted
+**Area**: infra
+
+### Summary
+Windows file writes need explicit flush + fsync to be immediately visible
+
+### Details
+On Windows, `pathlib.Path.write_text()` may not flush to disk immediately. Subsequent reads may return stale content. Use `open()` with explicit `fh.flush()` and `os.fsync(fh.fileno())` for reliable writes, especially when another process reads the file immediately after.
+
+### Suggested Action
+Promoted to TOOLS.md as a Windows Python rule.
+
+### Metadata
+- Source: conversation
+- Related Files: scripts/kanban_update.py
+- Tags: windows, python, filesystem, flush
+- Pattern-Key: windows.file_write.flush_fsync
+- First-Seen: 2026-03-24
+
+---
+
+## [LRN-20260324-005] knowledge_gap
+
+**Logged**: 2026-03-24T09:35:00+08:00
+**Priority**: medium
+**Status**: promoted
+**Area**: infra
+
+### Summary
+Windows doesn't support SIGTERM; only SIGINT partially works in asyncio signal handlers
+
+### Details
+`asyncio.get_event_loop().add_signal_handler(signal.SIGTERM, ...)` raises `NotImplementedError` on Windows. Must guard with `if platform.system() != 'Windows':` before registering signal handlers.
+
+### Suggested Action
+Promoted to TOOLS.md as a Windows asyncio rule.
+
+### Metadata
+- Source: conversation
+- Related Files: edict/backend/app/workers/orchestrator_worker.py
+- Tags: windows, asyncio, signal
+- First-Seen: 2026-03-24
+
+---
+
+## [LRN-20260324-006] best_practice
+
+**Logged**: 2026-03-24T11:50:00+08:00
+**Priority**: high
+**Status**: promoted
+**Area**: infra
+
+### Summary
+Fix the SOURCE file, not the copies — sync processes will overwrite edits
+
+### Details
+When `sync_agent_config.py` periodically copies scripts from source to agent workspaces, editing the copies is futile. Always edit the source file in `edict-main/scripts/` and let the sync propagate the fix. This is a general pattern for any system with automated file synchronization.
+
+### Suggested Action
+Promoted to TOOLS.md as a general system design rule.
+
+### Metadata
+- Source: conversation
+- Related Files: scripts/kanban_update.py, scripts/sync_agent_config.py
+- Tags: sync, source-of-truth, file-management
+- Pattern-Key: sync_systems.edit_source_not_copies
+- First-Seen: 2026-03-24
+
+---
+
+## [LRN-20260324-007] best_practice
+
+**Logged**: 2026-03-24T13:30:00+08:00
+**Priority**: medium
+**Status**: promoted
+**Area**: infra
+
+### Summary
+OpenClaw agent `-m` messages on Windows truncate multi-line content — use single-line notifications
+
+### Details
+`openclaw agent --agent X -m "line1\nline2\nline3"` on Windows via PowerShell only delivers the first line. Instead of embedding complex instructions in the dispatch message, make the server do the work directly and send a simple single-line notification to the agent.
+
+### Suggested Action
+Promoted to TOOLS.md as an OpenClaw + Windows rule.
+
+### Metadata
+- Source: conversation
+- Related Files: dashboard/server.py
+- Tags: openclaw, dispatch, windows, message
+- First-Seen: 2026-03-24
+
+---
+
+## [LRN-20260324-008] best_practice
+
+**Logged**: 2026-03-24T10:45:00+08:00
+**Priority**: medium
 **Status**: pending
 **Area**: infra
 
 ### Summary
-在 Windows 上部署 Unix 项目时，需要系统性替换 Linux 专用调用
+Edict architecture: dispatch_for_state should update kanban state before spawning agent, not after
 
 ### Details
-edict 项目多处使用了 Unix 特有的 API：
-1. `fcntl` 模块（文件锁）→ 需要 `msvcrt` 替代
-2. `pgrep` 命令（进程检测）→ 需要 `tasklist` 替代
-3. `&` 后台运行 → PowerShell 不支持，需用 `Start-Process` 或 OpenClaw 的 background exec
+The original design had the agent update kanban state via `kanban_update.py`. This failed on Windows due to path issues and message truncation. Better architecture: server directly updates state (authoritative), then spawns agent to do the actual work. Agent updates progress/completion independently.
 
 ### Suggested Action
-在 Windows 上部署任何项目前，全局搜索以下关键词并替换：
-- `import fcntl`
-- `pgrep`
-- `subprocess.run([...])` 中的 Linux 命令
+Consider making this the standard dispatch pattern for edict v2.
 
 ### Metadata
-- Source: error
-- Tags: windows, unix-compat, deployment
-
----
-
-## [LRN-20260323-003] best_practice
-
-**Logged**: 2026-03-23T18:46:00+08:00
-**Priority**: medium
-**Status**: pending
-**Area**: config
-
-### Summary
-edict 看板的数据同步是两步流程：sync → refresh
-
-### Details
-edict 的数据流：
-1. `sync_from_openclaw_runtime.py` → 写入 `tasks_source.json`
-2. `refresh_live_data.py` → 读取 `tasks_source.json`，生成 `live_status.json`
-3. 服务器读取 `live_status.json` 返回给前端
-
-两个脚本都需要运行，只跑 sync 不跑 refresh 看板不会有数据。
-另外，edict 本身没有自动同步机制，需要外部 cron 定时触发。
-
-### Suggested Action
-部署 edict 时同步设置 cron 定时任务，每 60 秒运行一次完整的同步流程。
-
-### Metadata
-- Source: error
-- Related Files: scripts/sync_from_openclaw_runtime.py, scripts/refresh_live_data.py
-- Tags: edict, data-sync, cron
-
----
-
-## [LRN-20260323-004] correction
-
-**Logged**: 2026-03-23T16:24:00+08:00
-**Priority**: medium
-**Status**: pending
-**Area**: backend
-
-### Summary
-看板服务器默认不会自动启动，需要手动运行
-
-### Details
-用户安装 edict 后访问 http://127.0.0.1:7891 发现打不开。原因：
-- OpenClaw Gateway 运行在 18789 端口
-- edict 看板服务器运行在 7891 端口，需要单独启动
-- 用户可能混淆了两个端口
-
-### Suggested Action
-安装完成后明确告知用户需要手动启动看板服务器，或创建开机启动脚本。
-
-### Metadata
-- Source: user_feedback
-- Tags: edict, server, port-confusion
-
----
-
-## [LRN-20260323-005] knowledge_gap
-
-**Logged**: 2026-03-23T15:25:00+08:00
-**Priority**: low
-**Status**: pending
-**Area**: config
-
-### Summary
-OpenRouter 的并发限制取决于账户余额，非固定值
-
-### Details
-用户询问 openrouter/xiaomi/mimo-v2-pro 的并发数。OpenRouter 不公布每个模型的具体并发限制，而是根据账户余额动态调整。余额越高，并发限制越宽松。具体数值需要查看 OpenRouter 控制台或 API 响应头。
-
-### Suggested Action
-遇到类似问题时直接引导用户查看 OpenRouter 控制台的 Settings → Limits 页面。
-
-### Metadata
-- Source: user_feedback
-- Tags: openrouter, rate-limit
-
----
+- Source: conversation
+- Related Files: dashboard/server.py
+- Tags: architecture, dispatch, kanban
+- Pattern-Key: dispatch.server_side_state_update
+- First-Seen: 2026-03-24

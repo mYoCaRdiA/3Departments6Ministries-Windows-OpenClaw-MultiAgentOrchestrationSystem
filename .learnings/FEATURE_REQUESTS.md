@@ -1,57 +1,53 @@
-# FEATURE_REQUESTS.md — 功能需求
+# Feature Requests Log
 
-## [FEAT-20260323-001] edict 自动数据同步
+## [FEAT-20260324-001] Cross-platform dispatch mechanism
 
-**Logged**: 2026-03-23T18:46:00+08:00
+**Logged**: 2026-03-24T13:30:00+08:00
 **Priority**: high
-**Status**: resolved
+**Status**: pending
 **Area**: backend
 
 ### Requested Capability
-edict 看板数据需要自动同步，不能手动触发
+Dispatch messages to agents should work reliably on both Windows and macOS/Linux without platform-specific workarounds
 
 ### User Context
-用户发了新旨意但看板上看不到，因为 sync 和 refresh 脚本没有被自动调用
+5 separate bugs were caused by Windows incompatibility in the dispatch pipeline (subprocess, message truncation, path resolution, signal handling, file sync). A unified cross-platform dispatch API would prevent this class of issues.
 
 ### Complexity Estimate
-simple
+complex
 
 ### Suggested Implementation
-通过 OpenClaw cron 设置每 60 秒运行一次同步脚本
-
-### Resolution
-- **Resolved**: 2026-03-23T18:47:00+08:00
-- **Notes**: 创建了 cron job `edict-data-sync`，每 60 秒自动同步
-
-### Metadata
-- Frequency: first_time
-- Related Features: edict dashboard
-
----
-
-## [FEAT-20260323-002] GitHub 镜像站克隆支持
-
-**Logged**: 2026-03-23T15:54:00+08:00
-**Priority**: medium
-**Status**: pending
-**Area**: infra
-
-### Requested Capability
-自动检测国内网络环境，优先使用镜像站克隆 GitHub 仓库
-
-### User Context
-用户在国内，直接 git clone GitHub 仓库超时。需要记住国内用 ghfast.top 等镜像。
-
-### Complexity Estimate
-simple
-
-### Suggested Implementation
-在 TOOLS.md 记录国内 GitHub 镜像站列表：
-- `https://ghfast.top/https://github.com/...`
-- `https://ghproxy.com/https://github.com/...`
+- Abstract subprocess calls behind a platform-aware wrapper
+- Use OpenClaw's internal API for dispatch instead of shelling out to `openclaw agent`
+- Or use `sessions_spawn` / `sessions_send` for agent communication
 
 ### Metadata
 - Frequency: recurring
-- Related Features: skill installation
+- Related Features: dispatch_for_state, wake_agent
 
 ---
+
+## [FEAT-20260324-002] Agent workspace path resolution
+
+**Logged**: 2026-03-24T10:45:00+08:00
+**Priority**: high
+**Status**: pending
+**Area**: backend
+
+### Requested Capability
+Scripts copied to agent workspaces should automatically resolve shared data paths correctly
+
+### User Context
+`kanban_update.py` uses `__file__` to find data, but when copied to 11 agent workspaces, each copy points to its own empty data directory. Need a way to declare "this script always reads from X" regardless of where it's installed.
+
+### Complexity Estimate
+medium
+
+### Suggested Implementation
+- Environment variable `EDICT_DATA_DIR` that scripts check
+- Or a config file in each workspace that points to the shared data
+- Or `sync_agent_config.py` patches paths during copy
+
+### Metadata
+- Frequency: recurring
+- Related Features: kanban_update.py, sync_agent_config.py
