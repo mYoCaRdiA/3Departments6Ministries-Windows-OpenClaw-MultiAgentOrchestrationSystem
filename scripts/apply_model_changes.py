@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """应用 data/pending_model_changes.json → openclaw.json，并重启 Gateway"""
-import json, pathlib, subprocess, datetime, shutil, logging, glob
+import json, pathlib, subprocess, datetime, shutil, logging, glob, platform
 from file_lock import atomic_json_write, atomic_json_read
+
+IS_WINDOWS = platform.system() == "Windows"
 
 log = logging.getLogger('model_change')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(name)s] %(message)s', datefmt='%H:%M:%S')
@@ -83,7 +85,7 @@ def main():
         restart_ok = False
         rollback = False
         try:
-            r = subprocess.run(['openclaw', 'gateway', 'restart'], capture_output=True, text=True, timeout=30)
+            r = subprocess.run(['openclaw', 'gateway', 'restart'], capture_output=True, text=True, timeout=30, shell=IS_WINDOWS)
             restart_ok = r.returncode == 0
             log.info(f'gateway restart rc={r.returncode}')
         except Exception as e:

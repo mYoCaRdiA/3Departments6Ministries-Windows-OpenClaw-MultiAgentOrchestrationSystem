@@ -80,7 +80,7 @@ def load():
 def _trigger_refresh():
     """异步触发 live_status 刷新，不阻塞调用方。"""
     try:
-        subprocess.Popen(['python3', str(REFRESH_SCRIPT)],
+        subprocess.Popen([sys.executable or 'python', str(REFRESH_SCRIPT)],
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except Exception:
         pass
